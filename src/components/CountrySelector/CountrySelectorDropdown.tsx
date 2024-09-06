@@ -27,6 +27,9 @@ export interface CountrySelectorDropdownStyleProps {
 
   listItemStyle?: React.CSSProperties;
   listItemClassName?: string;
+  listItemPreferredClassName?: string;
+  listItemSelectedClassName?: string;
+  listItemFocusedClassName?: string;
 
   listItemFlagStyle?: React.CSSProperties;
   listItemFlagClassName?: string;
@@ -291,7 +294,13 @@ export const CountrySelectorDropdown: React.FC<
                     'country-selector-dropdown__list-item--selected',
                   isFocused && 'country-selector-dropdown__list-item--focused',
                 ],
-                rawClassNames: [styleProps.listItemClassName],
+                rawClassNames: [
+                  styleProps.listItemClassName,
+                  isPreferred &&
+                    styleProps.listItemPreferredClassName,
+                  isSelected &&
+                    styleProps.listItemSelectedClassName,
+                  isFocused && styleProps.listItemFocusedClassName,],
               })}
               onClick={() => handleCountrySelect(country)}
               style={styleProps.listItemStyle}
