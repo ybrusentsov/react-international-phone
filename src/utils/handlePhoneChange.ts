@@ -15,6 +15,7 @@ export interface PhoneFormattingConfig {
   defaultMask: string;
   countryGuessingEnabled: boolean;
   disableFormatting: boolean;
+  enableLongNumbers: boolean;
 }
 
 interface HandlePhoneChangeProps extends PhoneFormattingConfig {

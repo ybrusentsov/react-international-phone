@@ -32,6 +32,10 @@ export interface FormatPhoneConfig {
    * Trim all non-digit values from the end of the result
    */
   trimNonDigitsEnd?: boolean;
+  /**
+   * allow to handle long numbers in the input value.
+   */
+  enableLongNumbers?: boolean;
 }
 
 export const formatPhone = (
@@ -137,6 +141,7 @@ export const formatPhone = (
     trimNonMaskCharsLeftover:
       config.trimNonDigitsEnd ||
       (config.disableDialCodeAndPrefix && phoneRightSide.length === 0),
+    enableLongNumbers: config.enableLongNumbers,
   });
 
   if (config.disableDialCodeAndPrefix) {
