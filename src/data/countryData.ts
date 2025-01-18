@@ -52,7 +52,7 @@ export const defaultCountries: CountryData[] = [
   ['Bolivia', 'bo', '591'],
   ['Bosnia and Herzegovina', 'ba', '387'],
   ['Botswana', 'bw', '267'],
-  ['Brazil', 'br', '55', '(..) .........'],
+  ['Brazil', 'br', '55', '(..) .....-....'],
   ['British Indian Ocean Territory', 'io', '246'],
   ['Brunei', 'bn', '673'],
   ['Bulgaria', 'bg', '359'],
