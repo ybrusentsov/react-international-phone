@@ -1,3 +1,16 @@
+# [4.5.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.4.0...v4.5.0) (2025-01-18)
+
+
+### Bug Fixes
+
+* **country-data:** add support for Mayotte ([7c3b97c](https://github.com/ybrusentsov/react-international-phone/commit/7c3b97c45770895f5f6f8c134cd8f1c9955ab033))
+* **country-data:** update Brazil phone format ([785619c](https://github.com/ybrusentsov/react-international-phone/commit/785619ca123ccec55ae9bf73c50120c895bc122a))
+
+
+### Features
+
+* **data:** djibouti & ethiopia Numbers Format Added ([5c4e5d7](https://github.com/ybrusentsov/react-international-phone/commit/5c4e5d7cfd05edea67f27214f95e736b4f9a34ca))
+
 # [4.4.0](https://github.com/goveo/react-international-phone/compare/v4.3.0...v4.4.0) (2024-12-16)
 
 
