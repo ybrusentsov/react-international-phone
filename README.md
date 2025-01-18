@@ -3,12 +3,12 @@
 🤙 International phone input component for React
 
 ![npm-version](https://img.shields.io/npm/v/react-international-phone)
-![build-status-badge](https://img.shields.io/github/actions/workflow/status/goveo/react-international-phone/release.yml?branch=master)
+![build-status-badge](https://img.shields.io/github/actions/workflow/status/ybrusentsov/react-international-phone/release.yml?branch=master)
 ![install-size-badge](https://badgen.net/packagephobia/install/react-international-phone)
-[![codecov](https://codecov.io/gh/goveo/react-international-phone/branch/master/graph/badge.svg?token=SHEF4U216O)](https://codecov.io/gh/goveo/react-international-phone)
+[![codecov](https://codecov.io/gh/ybrusentsov/react-international-phone/branch/master/graph/badge.svg?token=SHEF4U216O)](https://codecov.io/gh/ybrusentsov/react-international-phone)
 ![downloads](https://img.shields.io/npm/dt/react-international-phone)
 ![Semantic Release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
-[![stars](https://img.shields.io/github/stars/goveo/react-international-phone?style=social)](https://github.com/goveo/react-international-phone)
+[![stars](https://img.shields.io/github/stars/ybrusentsov/react-international-phone?style=social)](https://github.com/ybrusentsov/react-international-phone)
 
 [Live demo: Storybook](https://react-international-phone-storybook.vercel.app)
 

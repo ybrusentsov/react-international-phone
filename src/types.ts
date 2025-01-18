@@ -210,6 +210,7 @@ export type CountryIso2 =
   | 've'
   | 'vn'
   | 'ye'
+  | 'yt'
   | 'zm'
   | 'zw';
 
