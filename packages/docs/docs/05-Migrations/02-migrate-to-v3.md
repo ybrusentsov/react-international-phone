@@ -16,4 +16,4 @@ Check the [Phone Validation page](/docs/Usage/PhoneValidation) to get basic exam
 
 ## Regions and subregions have been removed
 
-If you used it (and really need it), please open an [issue](https://github.com/goveo/react-international-phone/issues) or [discussion](https://github.com/goveo/react-international-phone/discussions) and we will provide a basic solution on how to re-implement it.
+If you used it (and really need it), please open an [issue](https://github.com/ybrusentsov/react-international-phone/issues) or [discussion](https://github.com/ybrusentsov/react-international-phone/discussions) and we will provide a basic solution on how to re-implement it.

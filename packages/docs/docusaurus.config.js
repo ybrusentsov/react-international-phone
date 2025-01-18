@@ -17,7 +17,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.
-  organizationName: 'goveo',
+  organizationName: 'ybrusentsov',
   projectName: 'react-international-phone',
 
   i18n: {
@@ -33,7 +33,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/goveo/react-international-phone/tree/master/packages/docs/',
+            'https://github.com/ybrusentsov/react-international-phone/tree/master/packages/docs/',
         },
         blog: false,
         theme: {
@@ -65,7 +65,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/goveo/react-international-phone',
+            href: 'https://github.com/ybrusentsov/react-international-phone',
             label: 'GitHub',
             position: 'right',
           },
@@ -104,7 +104,7 @@ const config = {
             items: [
               {
                 label: 'Github Discussions',
-                href: 'https://github.com/goveo/react-international-phone/discussions',
+                href: 'https://github.com/ybrusentsov/react-international-phone/discussions',
               },
             ],
           },
@@ -113,7 +113,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/goveo/react-international-phone',
+                href: 'https://github.com/ybrusentsov/react-international-phone',
               },
             ],
           },
