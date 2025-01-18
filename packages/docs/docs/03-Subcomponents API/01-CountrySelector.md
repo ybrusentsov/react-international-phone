@@ -61,6 +61,15 @@ description="Hide dropdown icon and make CountrySelector not clickable"
 defaultValue="undefined"
 />
 
+### `buttonProps`
+
+<PropDescription
+type="React.ButtonHTMLAttributes<HTMLButtonElement>"
+description="Allows you to set props (such as id, disabled, aria-label, etc...) directly on the button element"
+defaultValue="undefined"
+/>
+
+
 ### `renderButtonWrapper`
 
 <PropDescription

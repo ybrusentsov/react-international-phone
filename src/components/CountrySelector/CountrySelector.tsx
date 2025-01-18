@@ -47,11 +47,18 @@ type RenderButtonWrapperRootProps = {
   | 'aria-expanded'
 >;
 
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
 export interface CountrySelectorProps extends CountrySelectorStyleProps {
   selectedCountry: CountryIso2;
   onSelect?: CountrySelectorDropdownProps['onSelect'];
   disabled?: boolean;
   hideDropdown?: boolean;
+  /**
+   * @description Default button element props
+   * @default undefined
+   */
+  buttonProps?: ButtonProps;
   countries?: CountryData[];
   preferredCountries?: CountryIso2[];
   flags?: CountrySelectorDropdownProps['flags'];
@@ -66,6 +73,7 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
   onSelect,
   disabled,
   hideDropdown,
+  buttonProps,
   countries = defaultCountries,
   preferredCountries = [],
   flags,
@@ -169,6 +177,7 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
         })}
         data-country={selectedCountry}
         style={styleProps.buttonStyle}
+        {...buttonProps}
       >
         {buttonContent}
       </button>
