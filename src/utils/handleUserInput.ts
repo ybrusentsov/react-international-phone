@@ -32,6 +32,7 @@ export const handleUserInput = (
     countryGuessingEnabled,
     defaultMask,
     disableFormatting,
+    enableLongNumbers,
     countries,
   }: HandleUserInputOptions,
 ): {
@@ -130,6 +131,7 @@ export const handleUserInput = (
     forceDialCode,
     disableDialCodeAndPrefix,
     disableFormatting,
+    enableLongNumbers,
     defaultMask,
   });
 
