@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -1170,6 +1170,23 @@ describe('PhoneInput', () => {
       render(<PhoneInput flags={[{ iso2: 'us', src: flagSrc }]} />);
 
       expect(getCountrySelectorFlag()).toHaveAttribute('src', flagSrc);
+    });
+  });
+
+  describe('custom flag component', () => {
+    test('should render custom flag component from flags prop', () => {
+      const flagComponent = () => <span>custom-flag</span>;
+      render(<PhoneInput flags={flagComponent} />);
+
+      const element = screen.getByText((content, element) => {
+        return (
+          element?.tagName.toLowerCase() === 'span' &&
+          element?.parentElement?.tagName.toLowerCase() === 'div' &&
+          element?.parentElement?.parentElement?.tagName.toLowerCase() === 'button'
+        );
+      }) as HTMLLIElement;
+
+      expect(element).toHaveTextContent('custom-flag');
     });
   });
 

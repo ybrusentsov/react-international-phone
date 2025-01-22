@@ -48,7 +48,14 @@ export interface CountrySelectorDropdownProps
   selectedCountry: CountryIso2;
   countries?: CountryData[];
   preferredCountries?: CountryIso2[];
-  flags?: CustomFlagImage[];
+  flags?:
+    | CustomFlagImage[]
+    | React.ComponentType<{
+        className?: string;
+        iso2?: ParsedCountry['iso2'];
+        disabled?: boolean;
+        style?: React.CSSProperties;
+      }>;
   onSelect?: (country: ParsedCountry) => void;
   onClose?: () => void;
 }
@@ -272,7 +279,6 @@ export const CountrySelectorDropdown: React.FC<
         const isFocused = index === focusedItemIndex;
         const isPreferred = preferredCountries.includes(country.iso2);
         const isLastPreferred = index === preferredCountries.length - 1;
-        const flag = flags?.find((f) => f.iso2 === country.iso2);
 
         return (
           <React.Fragment key={country.iso2}>
@@ -297,17 +303,31 @@ export const CountrySelectorDropdown: React.FC<
               style={styleProps.listItemStyle}
               title={country.name}
             >
-              <FlagImage
-                iso2={country.iso2}
-                src={flag?.src}
-                className={buildClassNames({
-                  addPrefix: [
-                    'country-selector-dropdown__list-item-flag-emoji',
-                  ],
-                  rawClassNames: [styleProps.listItemFlagClassName],
-                })}
-                style={styleProps.listItemFlagStyle}
-              />
+              {typeof flags === 'function' ? (
+                React.createElement(flags, {
+                  iso2: country.iso2,
+                  disabled: false,
+                  style: styleProps.listItemFlagStyle,
+                  className: buildClassNames({
+                    addPrefix: [
+                      'country-selector-dropdown__list-item-flag-emoji',
+                    ],
+                    rawClassNames: [styleProps.listItemFlagClassName],
+                  }),
+                })
+              ) : (
+                <FlagImage
+                  iso2={country.iso2}
+                  src={flags?.find((f) => f.iso2 === country.iso2)?.src}
+                  className={buildClassNames({
+                    addPrefix: [
+                      'country-selector-dropdown__list-item-flag-emoji',
+                    ],
+                    rawClassNames: [styleProps.listItemFlagClassName],
+                  })}
+                  style={styleProps.listItemFlagStyle}
+                />
+              )}
               <span
                 className={buildClassNames({
                   addPrefix: [
