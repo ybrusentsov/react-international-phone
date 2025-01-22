@@ -75,6 +75,7 @@
     "@commitlint/config-conventional": "^17.4.0",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@headlessui/react": "^1.7.17",
     "@mui/material": "^5.10.16",
     "@playwright/test": "^1.27.1",
     "@semantic-release/changelog": "^6.0.2",

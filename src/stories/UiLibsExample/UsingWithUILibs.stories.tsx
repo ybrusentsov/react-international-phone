@@ -4,6 +4,7 @@ import { AntPhone } from './components/AntPhone';
 import { ChakraPhone } from './components/ChakraPhone';
 import { MuiPhone } from './components/MuiPhone';
 import { MuiPhone2 } from './components/MuiPhone2';
+import { TailwindHeadlessUIPhone } from './components/Tailwind/TailwindHeadlessUIPhone';
 
 export default {
   title: 'Using with UI libs',
@@ -28,4 +29,10 @@ export const ChakraUI = () => {
 export const AntDesign = () => {
   const [phone, setPhone] = useState('+1123');
   return <AntPhone value={phone} onChange={setPhone} />;
+};
+
+
+export const TailwindHeadlessUI = () => {
+  const [phone, setPhone] = useState('+1123');
+  return <TailwindHeadlessUIPhone value={phone} onChange={setPhone} />;
 };
