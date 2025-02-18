@@ -140,6 +140,7 @@ export const defaultCountries: CountryData[] = [
   ['Eritrea', 'er', '291'],
   ['Estonia', 'ee', '372', '.... ......'],
   ['Ethiopia', 'et', '251', '.. ... ....'],
+  ['Faroe Islands', 'fo', '298', '.. .. ..'],
   ['Fiji', 'fj', '679'],
   ['Finland', 'fi', '358', '.. ... .. ..'],
   ['France', 'fr', '33', '. .. .. .. ..'],

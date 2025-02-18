@@ -63,6 +63,7 @@ export type CountryIso2 =
   | 'ee'
   | 'et'
   | 'fj'
+  | 'fo'
   | 'fi'
   | 'fr'
   | 'gf'
