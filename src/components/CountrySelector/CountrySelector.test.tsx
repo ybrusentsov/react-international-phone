@@ -173,4 +173,19 @@ describe('CountrySelector', () => {
       expect(getCountrySelectorDropdown()).toBeVisible();
     });
   });
+
+  describe('buttons props', () => {
+    test('should set button id', () => {
+      render(
+        <CountrySelector
+          selectedCountry="us"
+          buttonProps={{ id: 'country-selector-button' }}
+        />,
+      );
+      expect(getCountrySelector()).toHaveAttribute(
+        'id',
+        'country-selector-button',
+      );
+    });
+  });
 });

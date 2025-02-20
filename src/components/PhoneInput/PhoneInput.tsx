@@ -28,6 +28,7 @@ export interface PhoneInputStyleProps {
 }
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
+type CountrySelectorButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export interface PhoneInputProps
   extends Omit<UsePhoneInputConfig, 'onChange'>,
@@ -79,7 +80,11 @@ export interface PhoneInputProps
    * @default undefined
    */
   inputProps?: InputProps;
-
+  /**
+   * @description Default country selector button element props
+   * @default undefined
+   */
+  countrySelectorButtonProps?: CountrySelectorButtonProps;
   // pass most used input props as top level props for easy integration
   onFocus?: InputProps['onFocus'];
   onBlur?: InputProps['onBlur'];
@@ -121,6 +126,7 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
       dialCodePreviewStyleProps,
 
       inputProps,
+      countrySelectorButtonProps,
       placeholder,
       disabled,
       name,
@@ -196,6 +202,7 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
           preferredCountries={preferredCountries}
           disabled={disabled}
           hideDropdown={hideDropdown}
+          buttonProps={countrySelectorButtonProps}
           {...countrySelectorStyleProps}
         />
 

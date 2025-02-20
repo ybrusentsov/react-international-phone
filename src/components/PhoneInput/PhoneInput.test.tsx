@@ -1134,6 +1134,19 @@ describe('PhoneInput', () => {
     expect(getCountrySelector()).toHaveAttribute('data-country', 'gr');
   });
 
+  test('should set country selector button id', () => {
+    render(
+      <PhoneInput
+        defaultCountry="af"
+        countrySelectorButtonProps={{ id: 'country-selector-button' }}
+      />,
+    );
+    expect(getCountrySelector()).toHaveAttribute(
+      'id',
+      'country-selector-button',
+    );
+  });
+
   test('should display input value on every country', () => {
     render(
       <PhoneInput defaultCountry={parseCountry(defaultCountries[0]).iso2} />,
