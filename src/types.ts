@@ -153,6 +153,7 @@ export type CountryIso2 =
   | 'pe'
   | 'ph'
   | 'pl'
+  | 'pm'
   | 'pt'
   | 'pr'
   | 'qa'

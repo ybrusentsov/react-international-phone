@@ -256,6 +256,16 @@ export const defaultCountries: CountryData[] = [
   ['Rwanda', 'rw', '250'],
   ['Saint Kitts and Nevis', 'kn', '1869'],
   ['Saint Lucia', 'lc', '1758'],
+  [
+    'Saint Pierre & Miquelon',
+    'pm',
+    '508',
+    {
+      '/^708/': '... ... ...',
+      '/^8/': '... .. .. ..',
+      default: '.. .. ..',
+    },
+  ],
   ['Saint Vincent and the Grenadines', 'vc', '1784'],
   ['Samoa', 'ws', '685'],
   ['San Marino', 'sm', '378'],
