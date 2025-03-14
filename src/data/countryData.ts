@@ -304,6 +304,7 @@ export const defaultCountries: CountryData[] = [
   ['Vatican City', 'va', '39', '.. .... ....', 1],
   ['Venezuela', 've', '58'],
   ['Vietnam', 'vn', '84'],
+  ['Wallis & Futuna', 'wf', '681', '.. .. ..'],
   ['Yemen', 'ye', '967'],
   ['Zambia', 'zm', '260'],
   ['Zimbabwe', 'zw', '263'],
