@@ -1,6 +1,6 @@
 import './CountrySelector.style.scss';
 
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { defaultCountries } from '../../data/countryData';
 import { buildClassNames } from '../../style/buildClassNames';
@@ -55,6 +55,9 @@ export interface CountrySelectorProps extends CountrySelectorStyleProps {
   countries?: CountryData[];
   preferredCountries?: CountryIso2[];
   flags?: CountrySelectorDropdownProps['flags'];
+  enableSearch?: boolean;
+  searchPlaceholder?: string;
+  noResultsMessage?: React.ReactNode;
   renderButtonWrapper?: (props: {
     children: React.ReactNode;
     rootProps: RenderButtonWrapperRootProps;
@@ -69,10 +72,14 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
   countries = defaultCountries,
   preferredCountries = [],
   flags,
+  enableSearch,
+  searchPlaceholder,
+  noResultsMessage,
   renderButtonWrapper,
   ...styleProps
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const countrySelectorRef = useRef<HTMLDivElement>(null);
 
   const fullSelectedCountry = useMemo(() => {
     if (!selectedCountry) return undefined;
@@ -83,7 +90,44 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
     });
   }, [countries, selectedCountry]);
 
-  const countrySelectorRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showDropdown &&
+        countrySelectorRef.current &&
+        !countrySelectorRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
+
+  useEffect(() => {
+    const handleDocumentKeyDown = (event: KeyboardEvent) => {
+      if (showDropdown && event.key === 'Escape') {
+        // Check if the event source is an element inside the dropdown
+        const target = event.target as Node;
+        // Only close dropdown when the event is not handled (usually from document or non-dropdown elements)
+        // This prevents conflicts with Escape key handling inside the dropdown
+        if (
+          !countrySelectorRef.current?.contains(target) ||
+          target === countrySelectorRef.current
+        ) {
+          setShowDropdown(false);
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleDocumentKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleDocumentKeyDown);
+    };
+  }, [showDropdown]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!e.key) return;
@@ -195,9 +239,10 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
           onSelect?.(country);
         }}
         selectedCountry={selectedCountry}
-        onClose={() => {
-          setShowDropdown(false);
-        }}
+        enableSearch={enableSearch}
+        searchPlaceholder={searchPlaceholder}
+        noResultsMessage={noResultsMessage}
+        onClose={() => setShowDropdown(false)}
         {...styleProps.dropdownStyleProps}
       />
     </div>

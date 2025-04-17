@@ -182,6 +182,30 @@ description="Custom flag URLs array"
 defaultValue="undefined"
 />
 
+### `enableCountrySearch`
+
+<PropDescription
+type="boolean"
+description="Enable search function in country dropdown"
+defaultValue="true"
+/>
+
+### `countrySearchPlaceholder`
+
+<PropDescription
+type="string"
+description="Placeholder text for country search input"
+defaultValue='"Search countries or dial codes..."'
+/>
+
+### `countryNoResultsMessage`
+
+<PropDescription
+type="React.ReactNode"
+description="Message displayed when no countries match the search"
+defaultValue='"No results found"'
+/>
+
 ### `inputProps`
 
 <PropDescription

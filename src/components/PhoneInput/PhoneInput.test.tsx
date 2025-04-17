@@ -9,6 +9,7 @@ import { buildCountryData } from '../../utils/countryUtils/buildCountryData';
 import {
   getCountrySelector,
   getCountrySelectorDropdown,
+  getCountrySelectorDropdownUl,
   getCountrySelectorFlag,
   getDialCodePreview,
   getDropdownArrow,
@@ -838,7 +839,7 @@ describe('PhoneInput', () => {
         />,
       );
 
-      expect(getCountrySelectorDropdown().childNodes.length).toBe(
+      expect(getCountrySelectorDropdownUl().childNodes.length).toBe(
         countries.length,
       );
 
@@ -902,13 +903,13 @@ describe('PhoneInput', () => {
     test('should display preferred countries on top', () => {
       render(<PhoneInput preferredCountries={['us', 'gb']} />);
 
-      expect(getCountrySelectorDropdown().childNodes[0]).toBe(
+      expect(getCountrySelectorDropdownUl().childNodes[0]).toBe(
         getDropdownOption('us'),
       );
-      expect(getCountrySelectorDropdown().childNodes[1]).toBe(
+      expect(getCountrySelectorDropdownUl().childNodes[1]).toBe(
         getDropdownOption('gb'),
       );
-      expect(getCountrySelectorDropdown().childNodes.length).toBe(
+      expect(getCountrySelectorDropdownUl().childNodes.length).toBe(
         defaultCountries.length + 1, // sections divider included
       );
     });
@@ -916,7 +917,7 @@ describe('PhoneInput', () => {
     test('should ignore invalid preferred countries', () => {
       render(<PhoneInput preferredCountries={['xxx', 'us']} />);
 
-      expect(getCountrySelectorDropdown().childNodes[0]).toBe(
+      expect(getCountrySelectorDropdownUl().childNodes[0]).toBe(
         getDropdownOption('us'),
       );
     });
