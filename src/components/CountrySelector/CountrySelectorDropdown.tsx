@@ -81,9 +81,6 @@ export const CountrySelectorDropdown: React.FC<
   const listRef = useRef<HTMLUListElement>(null);
   const lastScrolledCountry = useRef<CountryIso2>();
   const [searchQuery, setSearchQuery] = useState('');
-  const [focusedElement, setFocusedElement] = useState<'input' | 'list' | null>(
-    null,
-  );
 
   const orderedCountries = useMemo<CountryData[]>(() => {
     if (!preferredCountries || !preferredCountries.length) {
@@ -211,6 +208,9 @@ export const CountrySelectorDropdown: React.FC<
       // Handle regular Tab key to move focus to the list
       e.preventDefault();
       focusList();
+    } else if (e.key === 'Tab' && e.shiftKey) {
+      // close dropdown when shift+tab is pressed
+      onClose?.();
     }
   };
 
@@ -331,7 +331,6 @@ export const CountrySelectorDropdown: React.FC<
     ) as HTMLInputElement;
     if (searchInput) {
       searchInput.focus();
-      setFocusedElement('input');
       return true;
     }
     return false;
@@ -340,7 +339,6 @@ export const CountrySelectorDropdown: React.FC<
   const focusList = useCallback(() => {
     if (listRef.current) {
       listRef.current.focus();
-      setFocusedElement('list');
       return true;
     }
     return false;
@@ -349,21 +347,14 @@ export const CountrySelectorDropdown: React.FC<
   // Dropdown show/hide effect
   useEffect(() => {
     if (!listRef.current) return;
-
     if (show) {
-      // If search is enabled, focus on the search input first
-      if (enableSearch) {
-        focusSearchInput();
-      } else {
-        // Otherwise focus on the list
-        focusList();
-      }
+      focusList();
     } else {
       resetFocusedItemIndex();
       setSearchQuery('');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show, enableSearch, focusSearchInput, focusList]);
+  }, [show, focusSearchInput, focusList]);
 
   // Update focusedItemIndex on selectedCountry prop change
   useEffect(() => {
@@ -375,11 +366,8 @@ export const CountrySelectorDropdown: React.FC<
   useEffect(() => {
     if (!show) {
       searchRef.current = { updatedAt: undefined, value: '' };
-      setFocusedElement(null);
     }
   }, [show]);
-
-  if (!show) return null;
 
   const hasPreferredDivider =
     preferredCountries && preferredCountries.length > 0;
@@ -428,6 +416,7 @@ export const CountrySelectorDropdown: React.FC<
             {country.name}
           </span>
           <span
+            data-dialcode={country.dialCode}
             className={buildClassNames({
               addPrefix: ['country-selector-dropdown__list-item-dial-code'],
               rawClassNames: [styleProps.listItemDialCodeClassName],
@@ -458,7 +447,7 @@ export const CountrySelectorDropdown: React.FC<
         addPrefix: ['country-selector-dropdown'],
         rawClassNames: [styleProps.className],
       })}
-      style={styleProps.style}
+      style={{ ...styleProps.style, visibility: show ? 'visible' : 'hidden' }}
       onMouseDown={(e) => {
         // Prevent losing focus when clicking on dropdown
         e.stopPropagation();

@@ -1,10 +1,20 @@
 import { screen } from '@testing-library/react';
-
+import { buildClassNames } from '../style/buildClassNames';
 import { CountryIso2 } from '../types';
 
-export const getInput = () =>
+export const getInput = () => {
+  return screen.getByText(
+    (content, element) =>
+      element?.tagName.toLowerCase() === 'input' &&
+      element?.className.includes('input'),
+  ) as HTMLInputElement;
+};
+
+export const getSearchInput = () =>
   screen.getByText(
-    (content, element) => element?.tagName.toLowerCase() === 'input',
+    (content, element) =>
+      element?.tagName.toLowerCase() === 'input' &&
+      element?.className.includes('search-input'),
   ) as HTMLInputElement;
 
 export const getCountrySelector = () =>
@@ -12,7 +22,17 @@ export const getCountrySelector = () =>
     return element?.tagName.toLowerCase() === 'button';
   });
 
-export const getCountrySelectorDropdown = () =>
+export const getCountrySelectorDropdown = () => {
+  return document.querySelector(
+    '.' +
+      buildClassNames({
+        addPrefix: ['country-selector-dropdown'],
+        rawClassNames: [],
+      }),
+  ) as HTMLDivElement;
+};
+
+export const getCountrySelectorDropdownUl = () =>
   screen.getByText((content, element) => {
     return element?.tagName.toLowerCase() === 'ul';
   }) as HTMLUListElement;
