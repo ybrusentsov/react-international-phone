@@ -5,4 +5,7 @@ import { PhoneInputStory } from '../PhoneInput.stories';
 
 export const Default: PhoneInputStory = {
   render: (args) => <PhoneInput {...args} />,
+  args: {
+    enableCountrySearch: true,
+  },
 };
