@@ -386,10 +386,7 @@ export const CountrySelectorDropdown: React.FC<
 
   const listItems = filteredCountries.map((c, index) => {
     const country = parseCountry(c);
-    const isPreferred =
-      hasPreferredDivider &&
-      index < preferredCountries.length &&
-      preferredCountries.includes(country.iso2);
+
     const isLastPreferred =
       hasPreferredDivider && index === preferredCountries.length - 1;
     const isFocused = index === focusedItemIndex;

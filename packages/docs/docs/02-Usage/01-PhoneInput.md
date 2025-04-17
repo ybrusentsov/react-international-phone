@@ -182,14 +182,6 @@ description="Custom flag URLs array"
 defaultValue="undefined"
 />
 
-### `inputProps`
-
-<PropDescription
-type="InputHTMLAttributes"
-description="Default input component props"
-defaultValue="undefined"
-/>
-
 ### `enableCountrySearch`
 
 <PropDescription
@@ -212,6 +204,14 @@ defaultValue='"Search countries or dial codes..."'
 type="React.ReactNode"
 description="Message displayed when no countries match the search"
 defaultValue='"No results found"'
+/>
+
+### `inputProps`
+
+<PropDescription
+type="InputHTMLAttributes"
+description="Default input component props"
+defaultValue="undefined"
 />
 
 :::note

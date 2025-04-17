@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -367,6 +367,275 @@ describe('CountrySelectorDropdown', () => {
 
       await user.keyboard('united kin');
       expect(getDropdownOption('gb')).toHaveClass(focusedItemClass);
+    });
+
+    test('should search country by dial code', async () => {
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+        />,
+      );
+      expect(getCountrySelectorDropdown()).toBeVisible();
+
+      expect(getDropdownOption('us')).toHaveClass(focusedItemClass);
+      expect(getDropdownOption('us')).toHaveClass(selectedItemClass);
+
+      // Search for India by dial code 91
+      await user.keyboard('91');
+
+      expect(getDropdownOption('us')).toHaveClass(selectedItemClass);
+      expect(getDropdownOption('us')).not.toHaveClass(focusedItemClass);
+
+      expect(getDropdownOption('in')).toHaveClass(focusedItemClass);
+      expect(getDropdownOption('in')).not.toHaveClass(selectedItemClass);
+    });
+
+    test('should show no results message when search has no matches', async () => {
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          noResultsMessage="No countries found"
+        />,
+      );
+
+      const searchInput = screen.getByPlaceholderText(
+        'Search countries or dial codes...',
+      );
+      await user.type(searchInput, 'nonexistentcountry');
+
+      expect(screen.queryByText('No countries found')).toBeInTheDocument();
+      expect(screen.queryByRole('option')).not.toBeInTheDocument();
+    });
+
+    test('should disable search when enableSearch is false', async () => {
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          enableSearch={false}
+        />,
+      );
+
+      expect(
+        screen.queryByPlaceholderText('Search countries or dial codes...'),
+      ).not.toBeInTheDocument();
+      expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('keyboard navigation and accessibility', () => {
+    test('should handle PageUp and PageDown keys correctly', async () => {
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+        />,
+      );
+
+      // First element should be focused
+      expect(getDropdownOption('us')).toHaveClass(focusedItemClass);
+
+      // PageDown should move to last element
+      await user.keyboard('{pagedown}');
+      expect(getDropdownOption('zw')).toHaveClass(focusedItemClass);
+
+      // PageUp should move to first element
+      await user.keyboard('{pageup}');
+      expect(getDropdownOption('af')).toHaveClass(focusedItemClass);
+    });
+
+    test('should select country with Enter key', async () => {
+      const onSelect = jest.fn();
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          onSelect={onSelect}
+        />,
+      );
+
+      await user.keyboard('{arrowdown}');
+      expect(getDropdownOption('us')).not.toHaveClass(focusedItemClass);
+      expect(getDropdownOption('gb')).toHaveClass(focusedItemClass);
+
+      await user.keyboard('{enter}');
+      expect(onSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          iso2: 'gb',
+          name: 'United Kingdom',
+        }),
+      );
+    });
+
+    test('should close dropdown when Escape key is pressed', async () => {
+      const onClose = jest.fn();
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          onClose={onClose}
+        />,
+      );
+
+      await user.keyboard('{escape}');
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    test('should move from search to list with arrow down', async () => {
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+        />,
+      );
+
+      // Focus search input
+      const searchInput = screen.getByPlaceholderText(
+        'Search countries or dial codes...',
+      );
+      await user.click(searchInput);
+
+      // Press arrow down to move to list
+      await user.keyboard('{arrowdown}');
+
+      // US should not be focused as we should now be on GB (next item)
+      expect(getDropdownOption('us')).not.toHaveClass(focusedItemClass);
+      expect(getDropdownOption('gb')).toHaveClass(focusedItemClass);
+    });
+
+    test('should handle Tab navigation correctly', async () => {
+      const onClose = jest.fn();
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          onClose={onClose}
+        />,
+      );
+
+      // Initial focus on search input
+      await user.tab();
+
+      // Tab to list
+      await user.tab();
+
+      // Tab again to close dropdown (tab out)
+      await user.tab();
+
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('preferred countries', () => {
+    test('should display preferred countries at the top', () => {
+      const preferredCountries = ['de', 'fr', 'it'];
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          preferredCountries={preferredCountries}
+        />,
+      );
+
+      const listItems = screen.getAllByRole('option');
+
+      // First three items should be preferred countries
+      expect(listItems[0]).toHaveAttribute('data-country', 'de');
+      expect(listItems[1]).toHaveAttribute('data-country', 'fr');
+      expect(listItems[2]).toHaveAttribute('data-country', 'it');
+
+      // Should have a divider after preferred countries
+      expect(screen.getByRole('separator')).toBeInTheDocument();
+    });
+
+    test('should focus the selected country even when in preferred countries', () => {
+      const preferredCountries = ['de', 'fr', 'it', 'us'];
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          preferredCountries={preferredCountries}
+        />,
+      );
+
+      expect(getDropdownOption('us')).toHaveClass(focusedItemClass);
+      expect(getDropdownOption('us')).toHaveClass(selectedItemClass);
+    });
+  });
+
+  describe('styling and customization', () => {
+    test('should apply custom className and style', () => {
+      const customClass = 'custom-dropdown';
+      const customStyle = { maxHeight: '300px' };
+
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          className={customClass}
+          style={customStyle}
+        />,
+      );
+
+      const dropdown = getCountrySelectorDropdown();
+      expect(dropdown).toHaveClass(customClass);
+      expect(dropdown).toHaveStyle({ maxHeight: '300px' });
+    });
+
+    test('should apply custom classes to list items', () => {
+      const customItemClass = 'custom-item';
+
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          listItemClassName={customItemClass}
+        />,
+      );
+
+      const listItems = screen.getAllByRole('option');
+      listItems.forEach((item) => {
+        expect(item).toHaveClass(customItemClass);
+      });
+    });
+
+    test('should apply custom styles to search container', () => {
+      const customStyle = { padding: '10px' };
+      const customClass = 'custom-search';
+
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          searchContainerStyle={customStyle}
+          searchContainerClassName={customClass}
+        />,
+      );
+
+      const searchContainer = screen.getByPlaceholderText(
+        'Search countries or dial codes...',
+      ).parentElement;
+      expect(searchContainer).toHaveClass(customClass);
+      expect(searchContainer).toHaveStyle({ padding: '10px' });
+    });
+
+    test('should apply custom styles to list item elements', () => {
+      render(
+        <CountrySelectorDropdown
+          {...defaultDropdownProps}
+          selectedCountry="us"
+          listItemCountryNameStyle={{ fontWeight: 'bold' }}
+          listItemDialCodeStyle={{ color: 'blue' }}
+        />,
+      );
+
+      const countryNameEl = screen.getByText('United States').closest('span');
+      const dialCodeEl = screen.getByText('+1').closest('span');
+
+      expect(countryNameEl).toHaveStyle({ fontWeight: 'bold' });
+      expect(dialCodeEl).toHaveStyle({ color: 'blue' });
     });
   });
 });
