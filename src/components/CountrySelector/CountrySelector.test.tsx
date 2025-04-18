@@ -164,8 +164,10 @@ describe('CountrySelector', () => {
 
       // move focus back
       await user.tab({ shift: true });
+      await user.tab({ shift: true });
 
       rerender(<CountrySelector selectedCountry="us" />);
+
       expect(getCountrySelector()).toHaveFocus();
       expect(getCountrySelectorDropdown()).not.toBeVisible();
 

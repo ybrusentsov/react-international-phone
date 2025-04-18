@@ -1,13 +1,10 @@
 import { screen } from '@testing-library/react';
+
 import { buildClassNames } from '../style/buildClassNames';
 import { CountryIso2 } from '../types';
 
 export const getInput = () => {
-  return screen.getByText(
-    (content, element) =>
-      element?.tagName.toLowerCase() === 'input' &&
-      element?.className.includes('input'),
-  ) as HTMLInputElement;
+  return screen.getByRole('phone-input') as HTMLInputElement;
 };
 
 export const getSearchInput = () =>
@@ -17,10 +14,7 @@ export const getSearchInput = () =>
       element?.className.includes('search-input'),
   ) as HTMLInputElement;
 
-export const getCountrySelector = () =>
-  screen.getByText((content, element) => {
-    return element?.tagName.toLowerCase() === 'button';
-  });
+export const getCountrySelector = () => screen.getByRole('combobox');
 
 export const getCountrySelectorDropdown = () => {
   return document.querySelector(

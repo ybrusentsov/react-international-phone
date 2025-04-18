@@ -88,15 +88,15 @@ $search-input-placeholder-color: var(
   top: $dropdown-top;
   left: $dropdown-left;
   display: flex;
+  overflow: hidden;
   width: 300px;
   max-height: 300px;
   flex-direction: column;
+  border-radius: 4px;
   margin: 0;
   background-color: $dropdown-item-background-color;
   box-shadow: $dropdown-shadow;
   color: $dropdown-item-text-color;
-  overflow: hidden;
-  border-radius: 4px;
 
   &__search-container {
     padding: 8px;
@@ -105,17 +105,17 @@ $search-input-placeholder-color: var(
 
   &__search-input {
     width: 100%;
+    box-sizing: border-box;
     padding: 8px 12px;
     border: 1px solid $search-input-border-color;
     border-radius: 4px;
     background-color: $search-input-background-color;
     color: $search-input-text-color;
     font-size: $dropdown-item-font-size;
-    box-sizing: border-box;
 
     &:focus {
-      outline: none;
       border-color: $search-input-focus-border-color;
+      outline: none;
     }
 
     &::placeholder {
@@ -124,27 +124,27 @@ $search-input-placeholder-color: var(
   }
 
   &__list {
-    list-style: none;
+    max-height: 230px;
     padding: 4px 0;
     margin: 0;
+    list-style: none;
     overflow-y: auto;
-    max-height: 230px;
   }
 
   &__no-results {
     padding: 10px;
-    text-align: center;
     color: $search-input-placeholder-color;
     font-size: $dropdown-item-font-size;
+    text-align: center;
   }
 
   &__list-divider {
     height: 1px;
+    padding: 0;
     border: none;
     margin: $dropdown-preferred-list-divider-margin;
     background: $dropdown-preferred-list-divider-color;
     list-style: none;
-    padding: 0;
   }
 
   &__list-item {
