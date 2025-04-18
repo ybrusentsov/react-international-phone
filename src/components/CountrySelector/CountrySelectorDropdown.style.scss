@@ -57,28 +57,94 @@ $dropdown-preferred-list-divider-margin: var(
   0
 );
 
+$search-input-background-color: var(
+  --react-international-phone-search-input-background-color,
+  #f5f5f5
+);
+
+$search-input-border-color: var(
+  --react-international-phone-search-input-border-color,
+  #ddd
+);
+
+$search-input-focus-border-color: var(
+  --react-international-phone-search-input-focus-border-color,
+  #999
+);
+
+$search-input-text-color: var(
+  --react-international-phone-search-input-text-color,
+  base.$text-color
+);
+
+$search-input-placeholder-color: var(
+  --react-international-phone-search-input-placeholder-color,
+  #aaa
+);
+
 .react-international-phone-country-selector-dropdown {
   position: absolute;
   z-index: 1;
   top: $dropdown-top;
   left: $dropdown-left;
   display: flex;
+  overflow: hidden;
   width: 300px;
-  max-height: 200px;
+  max-height: 300px;
   flex-direction: column;
-  padding: 4px 0;
+  border-radius: 4px;
   margin: 0;
   background-color: $dropdown-item-background-color;
   box-shadow: $dropdown-shadow;
   color: $dropdown-item-text-color;
-  list-style: none;
-  overflow-y: scroll;
 
-  &__preferred-list-divider {
+  &__search-container {
+    padding: 8px;
+    border-bottom: 1px solid $search-input-border-color;
+  }
+
+  &__search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border: 1px solid $search-input-border-color;
+    border-radius: 4px;
+    background-color: $search-input-background-color;
+    color: $search-input-text-color;
+    font-size: $dropdown-item-font-size;
+
+    &:focus {
+      border-color: $search-input-focus-border-color;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $search-input-placeholder-color;
+    }
+  }
+
+  &__list {
+    max-height: 230px;
+    padding: 4px 0;
+    margin: 0;
+    list-style: none;
+    overflow-y: auto;
+  }
+
+  &__no-results {
+    padding: 10px;
+    color: $search-input-placeholder-color;
+    font-size: $dropdown-item-font-size;
+    text-align: center;
+  }
+
+  &__list-divider {
     height: 1px;
+    padding: 0;
     border: none;
     margin: $dropdown-preferred-list-divider-margin;
     background: $dropdown-preferred-list-divider-color;
+    list-style: none;
   }
 
   &__list-item {

@@ -59,6 +59,24 @@ export interface PhoneInputProps
   flags?: CountrySelectorProps['flags'];
 
   /**
+   * @description Enable search function in country dropdown
+   * @default true
+   */
+  enableCountrySearch?: boolean;
+
+  /**
+   * @description Placeholder text for country search input
+   * @default "Search countries or dial codes..."
+   */
+  countrySearchPlaceholder?: string;
+
+  /**
+   * @description Message displayed when no countries match the search
+   * @default "No results found"
+   */
+  countryNoResultsMessage?: React.ReactNode;
+
+  /**
    * @description Callback that calls on phone change
    * @param phone - New phone value in E.164 format.
    * @param meta - Additional information about the phone.
@@ -112,6 +130,9 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
       showDisabledDialCodeAndPrefix,
       disableFocusAfterCountrySelect,
       flags,
+      enableCountrySearch = true,
+      countrySearchPlaceholder = 'Search countries or dial codes...',
+      countryNoResultsMessage = 'No results found',
 
       style,
       className,
@@ -196,6 +217,9 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
           preferredCountries={preferredCountries}
           disabled={disabled}
           hideDropdown={hideDropdown}
+          enableSearch={enableCountrySearch}
+          searchPlaceholder={countrySearchPlaceholder}
+          noResultsMessage={countryNoResultsMessage}
           {...countrySelectorStyleProps}
         />
 
@@ -209,6 +233,7 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
         )}
 
         <input
+          role="phone-input"
           onChange={handlePhoneValueChange}
           value={inputValue}
           type="tel"
