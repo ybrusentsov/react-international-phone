@@ -6,7 +6,7 @@ export const getInput = () => {
   return screen.getByText(
     (content, element) =>
       element?.tagName.toLowerCase() === 'input' &&
-      element?.className.includes('phone-input'),
+      element?.className.includes('input'),
   ) as HTMLInputElement;
 };
 

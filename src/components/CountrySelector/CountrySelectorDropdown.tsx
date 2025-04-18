@@ -383,6 +383,7 @@ export const CountrySelectorDropdown: React.FC<
       <React.Fragment key={country.iso2}>
         <li
           data-country={country.iso2}
+          data-testid={`${country.name} ${dialCodePrefix}${country.dialCode}`}
           role="option"
           aria-selected={country.iso2 === selectedCountry}
           className={buildClassNames({
@@ -423,8 +424,7 @@ export const CountrySelectorDropdown: React.FC<
             })}
             style={styleProps.listItemDialCodeStyle}
           >
-            {dialCodePrefix}
-            {country.dialCode}
+            {dialCodePrefix + country.dialCode}
           </span>
         </li>
         {isLastPreferred && (
@@ -447,7 +447,7 @@ export const CountrySelectorDropdown: React.FC<
         addPrefix: ['country-selector-dropdown'],
         rawClassNames: [styleProps.className],
       })}
-      style={{ ...styleProps.style, visibility: show ? 'visible' : 'hidden' }}
+      style={{ ...styleProps.style, display: show ? 'flex' : 'none' }}
       onMouseDown={(e) => {
         // Prevent losing focus when clicking on dropdown
         e.stopPropagation();

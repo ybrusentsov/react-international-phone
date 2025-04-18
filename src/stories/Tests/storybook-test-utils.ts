@@ -10,10 +10,7 @@ export class StorybookTestUtils {
   }
 
   getPhoneInput = () => {
-    const phoneInput: HTMLInputElement = this.canvas.getByText('', {
-      selector: 'input',
-    });
-
+    const phoneInput: HTMLInputElement = this.canvas.getByRole('phone-input');
     return phoneInput;
   };
 
@@ -27,7 +24,8 @@ export class StorybookTestUtils {
 
   getCountryDropdownOption = (country: CountryIso2) => {
     const fullCountry = getCountry({ field: 'iso2', value: country });
-    return this.canvas.getByLabelText(
+    // `${fullCountry?.name} +${fullCountry?.dialCode}`,
+    return this.canvas.getByTestId(
       `${fullCountry?.name} +${fullCountry?.dialCode}`,
     );
   };

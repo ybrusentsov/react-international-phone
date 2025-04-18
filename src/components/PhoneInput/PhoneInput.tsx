@@ -233,6 +233,7 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
         )}
 
         <input
+          role="phone-input"
           onChange={handlePhoneValueChange}
           value={inputValue}
           type="tel"
