@@ -86,11 +86,11 @@ const config: Config = {
               },
               {
                 label: 'Subcomponents API',
-                to: '/docs/Subcomponents%20API/',
+                to: '/docs/Subcomponents-API/',
               },
               {
                 label: 'Advanced Usage',
-                to: '/docs/Advanced%20Usage/usePhoneInput',
+                to: '/docs/Advanced-Usage/usePhoneInput',
               },
               {
                 label: 'Migrations',

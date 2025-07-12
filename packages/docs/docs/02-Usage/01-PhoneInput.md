@@ -197,14 +197,14 @@ If you want add some additional attributes to the input element, you can do it u
 
 ## Style properties
 
-| Prop                      | Type                                                                                | Description                                   |
-| ------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------- |
-| style                     | `CSSProperties`                                                                     | Custom styles for **PhoneInput container**    |
-| className                 | `string`                                                                            | Custom className for **PhoneInput container** |
-| inputStyle                | `CSSProperties`                                                                     | Custom styles for **input field**             |
-| inputClassName            | `string`                                                                            | Custom className for **input field**          |
-| countrySelectorStyleProps | [`CountrySelectorStyleProps`](/docs/Subcomponents%20API/CountrySelector#properties) | Style properties for **country selector**     |
-| dialCodePreviewStyleProps | [`DialCodePreviewStyleProps`](/docs/Subcomponents%20API/DialCodePreview#properties) | Style properties for **dial code preview**    |
+| Prop                      | Type                                                                              | Description                                   |
+| ------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------- |
+| style                     | `CSSProperties`                                                                   | Custom styles for **PhoneInput container**    |
+| className                 | `string`                                                                          | Custom className for **PhoneInput container** |
+| inputStyle                | `CSSProperties`                                                                   | Custom styles for **input field**             |
+| inputClassName            | `string`                                                                          | Custom className for **input field**          |
+| countrySelectorStyleProps | [`CountrySelectorStyleProps`](/docs/Subcomponents-API/CountrySelector#properties) | Style properties for **country selector**     |
+| dialCodePreviewStyleProps | [`DialCodePreviewStyleProps`](/docs/Subcomponents-API/DialCodePreview#properties) | Style properties for **dial code preview**    |
 
 ## CSS variables
 
@@ -220,7 +220,7 @@ If you want add some additional attributes to the input element, you can do it u
 | --react-international-phone-disabled-text-color       | `#666`        |
 
 :::info
-You can find more styling properties and CSS variables in [Subcomponents](/docs/subcomponents%20API/)
+You can find more styling properties and CSS variables in [Subcomponents](/docs/Subcomponents-API/)
 :::
 
 ## Ref forwarding
