@@ -1,3 +1,5 @@
+import ModifiedCountriesExample from '@site/src/components/ModifiedCountriesExample'
+
 # Modify countries
 
 You can define your own country list for **PhoneInput**.
@@ -42,16 +44,7 @@ const App = () => {
 
 Output:
 
-import { PhoneInput, defaultCountries, parseCountry, } from 'react-international-phone'
-const countries = defaultCountries.filter((country) => {
-const { iso2 } = parseCountry(country);
-return ['us', 'ua', 'gb'].includes(iso2);
-});
-
-<PhoneInput
-  defaultCountry="ua"
-  countries={countries}
-/>
+<ModifiedCountriesExample />
 
 ## Country Data Type
 
