@@ -296,11 +296,10 @@ export const CountrySelectorDropdown: React.FC<
                 ],
                 rawClassNames: [
                   styleProps.listItemClassName,
-                  isPreferred &&
-                    styleProps.listItemPreferredClassName,
-                  isSelected &&
-                    styleProps.listItemSelectedClassName,
-                  isFocused && styleProps.listItemFocusedClassName,],
+                  isPreferred && styleProps.listItemPreferredClassName,
+                  isSelected && styleProps.listItemSelectedClassName,
+                  isFocused && styleProps.listItemFocusedClassName,
+                ],
               })}
               onClick={() => handleCountrySelect(country)}
               style={styleProps.listItemStyle}
