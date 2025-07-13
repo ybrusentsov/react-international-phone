@@ -1,13 +1,13 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes } from 'prism-react-renderer';
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
-const packageJson = require('../../package.json');
+import * as packageJson from '../../package.json';
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
   title: 'react-international-phone',
   tagline: 'International phone input component for React',
   url: 'https://react-international-phone-docs.vercel.app',
@@ -28,8 +28,7 @@ const config = {
   presets: [
     [
       'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
@@ -39,13 +38,13 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
-      }),
+      } satisfies Preset.Options,
     ],
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       announcementBar: {
         id: 'support_ukraine',
         content:
@@ -87,11 +86,11 @@ const config = {
               },
               {
                 label: 'Subcomponents API',
-                to: '/docs/Subcomponents%20API/',
+                to: '/docs/Subcomponents-API/',
               },
               {
                 label: 'Advanced Usage',
-                to: '/docs/Advanced%20Usage/usePhoneInput',
+                to: '/docs/Advanced-Usage/usePhoneInput',
               },
               {
                 label: 'Migrations',
@@ -127,7 +126,7 @@ const config = {
       metadata: [
         { name: 'keywords', content: packageJson.keywords.join(', ') },
       ],
-    }),
+    },
 };
 
-module.exports = config;
+export default config;

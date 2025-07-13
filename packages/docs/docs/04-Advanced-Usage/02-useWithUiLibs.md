@@ -1,6 +1,6 @@
 # Using with UI libraries
 
-You can build phone input by combination of **input component** (that you want to be a phone input), [**usePhoneInput**](./usePhoneInput) hook and [**CountrySelector**](../Subcomponents%20API/CountrySelector).
+You can build phone input by combination of **input component** (that you want to be a phone input), [**usePhoneInput**](./usePhoneInput) hook and [**CountrySelector**](../Subcomponents-API/CountrySelector).
 
 **Ant Design** and **Chakra UI** examples can be found [on GitHub](https://github.com/ybrusentsov/react-international-phone/tree/master/src/stories/UiLibsExample/components) and demos for these code snippets can be found [on Storybook](https://react-international-phone-storybook.vercel.app/?path=/story/using-with-ui-libs).
 
