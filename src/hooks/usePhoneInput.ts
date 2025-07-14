@@ -100,6 +100,12 @@ export interface UsePhoneInputConfig {
   disableFormatting?: boolean;
 
   /**
+   * @description Allow phone value to be longer than the mask.
+   * @default false
+   */
+  enableLongNumbers?: boolean;
+
+  /**
    * @description Callback that calls on phone change
    * @param data - New phone data.
    * @param data.phone - Phone in E164 format.
@@ -134,6 +140,7 @@ export const defaultConfig: Required<
   forceDialCode: false,
   disableDialCodeAndPrefix: false,
   disableFormatting: false,
+  enableLongNumbers: false,
   countries: defaultCountries,
   preferredCountries: [],
 };
@@ -151,6 +158,7 @@ export const usePhoneInput = ({
   forceDialCode: forceDialCodeConfig = defaultConfig.forceDialCode,
   disableDialCodeAndPrefix = defaultConfig.disableDialCodeAndPrefix,
   disableFormatting = defaultConfig.disableFormatting,
+  enableLongNumbers = defaultConfig.enableLongNumbers,
   onChange,
   inputRef: inputRefProp,
 }: UsePhoneInputConfig) => {
@@ -166,6 +174,7 @@ export const usePhoneInput = ({
     defaultMask,
     countryGuessingEnabled,
     disableFormatting,
+    enableLongNumbers,
   };
 
   const ref = useRef<HTMLInputElement | null>(null);
