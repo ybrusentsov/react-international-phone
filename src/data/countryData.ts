@@ -31,7 +31,7 @@ export const defaultCountries: CountryData[] = [
       '/^(2|3|4|5)/': '(.) .... ....',
       '/^9/': '(.) .... .....',
     },
-    0
+    0,
   ],
   ['Armenia', 'am', '374', '.. ......'],
   ['Aruba', 'aw', '297'],
