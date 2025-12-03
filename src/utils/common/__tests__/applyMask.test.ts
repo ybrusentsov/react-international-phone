@@ -114,4 +114,17 @@ describe('applyMask', () => {
       '(1234',
     );
   });
+
+  test('should handle enableLongNumbers option', () => {
+    const maskConfig = {
+      value: '123456789',
+      mask: '(....) .. ..',
+      maskSymbol: '.',
+    };
+
+    expect(applyMask(maskConfig)).toBe('(1234) 56 78');
+    expect(applyMask({ ...maskConfig, enableLongNumbers: true })).toBe(
+      '123456789',
+    );
+  });
 });
