@@ -1,3 +1,10 @@
+## [4.6.1](https://github.com/ybrusentsov/react-international-phone/compare/v4.6.0...v4.6.1) (2025-11-27)
+
+
+### Bug Fixes
+
+* **country-data:** update Argentina formatting ([695584a](https://github.com/ybrusentsov/react-international-phone/commit/695584a11d9403547017fd0ae1564a274a14bca9))
+
 # [4.6.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.5.0...v4.6.0) (2025-07-13)
 
 
