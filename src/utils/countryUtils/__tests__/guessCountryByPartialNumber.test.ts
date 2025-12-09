@@ -67,11 +67,11 @@ describe('guessCountryByPartialNumber', () => {
     });
     expect(shouldFindJapan).toMatchObject({ country: { dialCode: '81' } });
 
-    const shouldFindPortugal = guessCountryByPartialNumber({
+    const shouldFindGibraltar = guessCountryByPartialNumber({
       phone: '+35',
       countries: defaultCountries,
     });
-    expect(shouldFindPortugal).toMatchObject({ country: { dialCode: '351' } });
+    expect(shouldFindGibraltar).toMatchObject({ country: { dialCode: '350' } });
   });
 
   test('should respect priority value', () => {

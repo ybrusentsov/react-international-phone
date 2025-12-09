@@ -1,3 +1,25 @@
+## [4.6.1](https://github.com/ybrusentsov/react-international-phone/compare/v4.6.0...v4.6.1) (2025-11-27)
+
+
+### Bug Fixes
+
+* **country-data:** update Argentina formatting ([695584a](https://github.com/ybrusentsov/react-international-phone/commit/695584a11d9403547017fd0ae1564a274a14bca9))
+
+# [4.6.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.5.0...v4.6.0) (2025-07-13)
+
+
+### Bug Fixes
+
+* **country-data:** update French DOM-TOM phone formats ([7fd4d42](https://github.com/ybrusentsov/react-international-phone/commit/7fd4d4237f286d5539b8767f00b67c67dc70a70c))
+
+
+### Features
+
+* add support for Saint Pierre & Miquelon ([251c0b1](https://github.com/ybrusentsov/react-international-phone/commit/251c0b1bee2d3e1120cb1ece47aeb805752c752c))
+* add support for Wallis & Futuna ([a4de357](https://github.com/ybrusentsov/react-international-phone/commit/a4de357ba9e06876cafe51a674ba22373284f3b0))
+* **country-data:** add faroe islands phone format ([be6ac38](https://github.com/ybrusentsov/react-international-phone/commit/be6ac389932b60c99ef2f18c62b5d590f9ee925e))
+* **country-selector:** add extra classnames for list item states ([740c317](https://github.com/ybrusentsov/react-international-phone/commit/740c3172938b2b2f7f786ea33ea80b257a4f5615))
+
 # [4.5.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.4.0...v4.5.0) (2025-01-18)
 
 
