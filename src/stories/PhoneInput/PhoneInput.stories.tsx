@@ -26,6 +26,7 @@ import { WithAutofocus } from './stories/WithAutofocus.story';
 import { DisableFormatting } from './stories/DisableFormatting.story';
 import { ControlledMode } from './stories/ControlledMode.story';
 import { CustomFlags } from './stories/CustomFlags.story';
+import { CustomFlagComponent } from './stories/CustomFlagComponent.story';
 
 export const _Default = Default;
 export const _WithInitialValue = WithInitialValue;
@@ -42,3 +43,4 @@ export const _WithAutofocus = WithAutofocus;
 export const _DisableFormatting = DisableFormatting;
 export const _ControlledMode = ControlledMode;
 export const _CustomFlags = CustomFlags;
+export const _CustomFlagComponent = CustomFlagComponent;

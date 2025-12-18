@@ -117,21 +117,36 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
         })}
         style={styleProps.buttonContentWrapperStyle}
       >
-        <FlagImage
-          iso2={selectedCountry}
-          src={flags?.find((f) => f.iso2 === selectedCountry)?.src}
-          className={buildClassNames({
-            addPrefix: [
-              'country-selector-button__flag-emoji',
-              disabled && 'country-selector-button__flag-emoji--disabled',
-            ],
-            rawClassNames: [styleProps.flagClassName],
-          })}
-          style={{
-            visibility: selectedCountry ? 'visible' : 'hidden',
-            ...styleProps.flagStyle,
-          }}
-        />
+        {typeof flags === 'function' ? (
+          React.createElement(flags, {
+            iso2: selectedCountry,
+            disabled,
+            style: styleProps.flagStyle,
+            className: buildClassNames({
+              addPrefix: [
+                'country-selector-button__flag-emoji',
+                disabled && 'country-selector-button__flag-emoji--disabled',
+              ],
+              rawClassNames: [styleProps.flagClassName],
+            }),
+          })
+        ) : (
+          <FlagImage
+            iso2={selectedCountry}
+            src={flags?.find((f) => f.iso2 === selectedCountry)?.src}
+            className={buildClassNames({
+              addPrefix: [
+                'country-selector-button__flag-emoji',
+                disabled && 'country-selector-button__flag-emoji--disabled',
+              ],
+              rawClassNames: [styleProps.flagClassName],
+            })}
+            style={{
+              visibility: selectedCountry ? 'visible' : 'hidden',
+              ...styleProps.flagStyle,
+            }}
+          />
+        )}
         {!hideDropdown && (
           <div
             className={buildClassNames({

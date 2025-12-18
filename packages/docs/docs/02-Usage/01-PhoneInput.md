@@ -177,8 +177,8 @@ defaultValue="false"
 ### `flags`
 
 <PropDescription
-type="CustomFlagImage[]"
-description="Custom flag URLs array"
+type="CustomFlagImage[] | ComponentType"
+description="Custom flag URLs array or a custom flag component"
 defaultValue="undefined"
 />
 
