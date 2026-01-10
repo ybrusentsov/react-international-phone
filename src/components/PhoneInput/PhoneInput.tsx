@@ -1,6 +1,6 @@
 import './PhoneInput.style.scss';
 
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useCallback, useImperativeHandle } from 'react';
 
 import { defaultCountries } from '../../data/countryData';
 import { usePhoneInput, UsePhoneInputConfig } from '../../hooks/usePhoneInput';
@@ -107,7 +107,7 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
       value,
       onChange,
       countries = defaultCountries,
-      preferredCountries = [],
+      preferredCountries,
       hideDropdown,
       showDisabledDialCodeAndPrefix,
       disableFocusAfterCountrySelect,
@@ -133,6 +133,16 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
     },
     ref,
   ) => {
+    const handlePhoneInputChange = useCallback(
+      (data: { phone: string; inputValue: string; country: ParsedCountry }) => {
+        onChange?.(data.phone, {
+          country: data.country,
+          inputValue: data.inputValue,
+        });
+      },
+      [onChange],
+    );
+
     const {
       phone,
       inputValue,
@@ -144,18 +154,22 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
       value,
       countries,
       ...usePhoneInputConfig,
-      onChange: (data) => {
-        onChange?.(data.phone, {
-          country: data.country,
-          inputValue: data.inputValue,
-        });
-      },
+      onChange: handlePhoneInputChange,
     });
 
     const showDialCodePreview =
       usePhoneInputConfig.disableDialCodeAndPrefix &&
       showDisabledDialCodeAndPrefix &&
       country?.dialCode;
+
+    const handleCountrySelect = useCallback(
+      (country: ParsedCountry) => {
+        setCountry(country.iso2, {
+          focusOnInput: !disableFocusAfterCountrySelect,
+        });
+      },
+      [setCountry, disableFocusAfterCountrySelect],
+    );
 
     useImperativeHandle<PhoneInputRefType, PhoneInputRefType>(
       ref,
@@ -185,13 +199,9 @@ export const PhoneInput = forwardRef<PhoneInputRefType, PhoneInputProps>(
         style={style}
       >
         <CountrySelector
-          onSelect={(country) =>
-            setCountry(country.iso2, {
-              focusOnInput: !disableFocusAfterCountrySelect,
-            })
-          }
+          onSelect={handleCountrySelect}
           flags={flags}
-          selectedCountry={country.iso2}
+          selectedCountry={country?.iso2}
           countries={countries}
           preferredCountries={preferredCountries}
           disabled={disabled}
