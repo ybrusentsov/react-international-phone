@@ -64,3 +64,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: webiny/action-conventional-commits@v1.1.0
+
+  storybook-functional-tests:
+    name: Storybook Functional Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build Storybook
+        run: pnpm storybook:build
+
+      - name: Run Storybook Test Runner
+        run: pnpm test-storybook
+        env:
+          CI: true
