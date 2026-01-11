@@ -38,6 +38,9 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: 'storybook:build'
+          exitOnceUploaded: true
+          exitZeroOnChanges: true
+          autoAcceptChanges: false
 
       - name: Build package
         run: pnpm build
