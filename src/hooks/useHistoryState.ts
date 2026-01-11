@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { isShallowEqualObjects } from '../utils/common/isShallowEqualObjects';
 import { useTimer } from './useTimer';
@@ -33,80 +33,91 @@ export function useHistoryState<T extends Record<string, unknown> | string>(
   };
 
   const [state, _setState] = useState(initialValue);
-  const [history, setHistory] = useState<T[]>([state]);
-  const [pointer, setPointer] = useState<number>(0);
+
+  const historyRef = useRef<T[]>([state]);
+  const pointerRef = useRef<number>(0);
 
   const timer = useTimer();
 
-  const setState = (value: T, config?: SetStateConfig) => {
-    if (
-      // compare entries if passed value is object
-      (typeof value === 'object' &&
-        typeof state === 'object' &&
-        isShallowEqualObjects(value, state)) ||
-      value === state
-    ) {
-      return;
-    }
+  const setState = useCallback(
+    (value: T, config?: SetStateConfig) => {
+      const lastState = historyRef.current[pointerRef.current];
 
-    const isOverridingEnabled = overrideLastItemDebounceMS > 0;
-
-    const timePassedSinceLastChange = timer.check();
-    const debounceTimePassed =
-      isOverridingEnabled && timePassedSinceLastChange !== undefined
-        ? timePassedSinceLastChange > overrideLastItemDebounceMS
-        : true;
-
-    const shouldOverrideLastItem =
-      // use value of config.overrideLastItem if passed
-      config?.overrideLastItem !== undefined
-        ? config.overrideLastItem
-        : !debounceTimePassed;
-
-    if (shouldOverrideLastItem) {
-      // do not update pointer
-      setHistory((prev) => {
-        return [...prev.slice(0, pointer), value];
-      });
-    } else {
-      const isSizeOverflow = history.length >= size;
-      setHistory((prev) => [
-        ...prev.slice(isSizeOverflow ? 1 : 0, pointer + 1),
-        value,
-      ]);
-      if (!isSizeOverflow) {
-        setPointer((prev) => prev + 1);
+      if (
+        value === lastState ||
+        // compare entries if passed value is object
+        (typeof value === 'object' &&
+          typeof lastState === 'object' &&
+          isShallowEqualObjects(value, lastState))
+      ) {
+        return;
       }
-    }
-    _setState(value);
-    onChange?.(value);
-  };
 
-  const undo = (): HistoryActionResult<T> => {
-    if (pointer <= 0) {
+      const isOverridingEnabled = overrideLastItemDebounceMS > 0;
+
+      const timePassedSinceLastChange = timer.check();
+      const debounceTimePassed =
+        isOverridingEnabled && timePassedSinceLastChange !== undefined
+          ? timePassedSinceLastChange > overrideLastItemDebounceMS
+          : true;
+
+      const shouldOverrideLastItem =
+        // use value of config.overrideLastItem if passed
+        config?.overrideLastItem !== undefined
+          ? config.overrideLastItem
+          : !debounceTimePassed;
+
+      if (shouldOverrideLastItem) {
+        // do not update pointer
+        historyRef.current = [
+          ...historyRef.current.slice(0, pointerRef.current),
+          value,
+        ];
+      } else {
+        const isSizeOverflow = historyRef.current.length >= size;
+        historyRef.current = [
+          ...historyRef.current.slice(
+            isSizeOverflow ? 1 : 0,
+            pointerRef.current + 1,
+          ),
+          value,
+        ];
+
+        if (!isSizeOverflow) {
+          pointerRef.current += 1;
+        }
+      }
+      _setState(value);
+      onChange?.(value);
+    },
+    [onChange, overrideLastItemDebounceMS, size, timer],
+  );
+
+  const undo = useCallback((): HistoryActionResult<T> => {
+    if (pointerRef.current <= 0) {
       return { success: false };
     }
 
-    const value = history[pointer - 1];
+    const value = historyRef.current[pointerRef.current - 1];
     _setState(value);
-    setPointer((prev) => prev - 1);
+    pointerRef.current -= 1;
 
     onChange?.(value);
     return { success: true, value };
-  };
+  }, [onChange]);
 
-  const redo = (): HistoryActionResult<T> => {
-    if (pointer + 1 >= history.length) {
+  const redo = useCallback((): HistoryActionResult<T> => {
+    if (pointerRef.current + 1 >= historyRef.current.length) {
       return { success: false };
     }
 
-    const value = history[pointer + 1];
+    const value = historyRef.current[pointerRef.current + 1];
     _setState(value);
-    setPointer((prev) => prev + 1);
+    pointerRef.current += 1;
 
     onChange?.(value);
     return { success: true, value };
-  };
+  }, [onChange]);
 
   return [state, setState, undo, redo] as const;
 }

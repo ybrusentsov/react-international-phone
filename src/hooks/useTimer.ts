@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 export const useTimer = () => {
   const prevTimeRef = useRef<number>();
@@ -8,7 +8,7 @@ export const useTimer = () => {
    * @returns a milliseconds difference from the last check() call.
    * On first call returns undefined
    */
-  const check = () => {
+  const check = useCallback(() => {
     const newTime = Date.now();
     const difference = prevTimeRef.current
       ? newTime - currentTimeRef.current
@@ -18,9 +18,12 @@ export const useTimer = () => {
     currentTimeRef.current = newTime;
 
     return difference;
-  };
+  }, []);
 
-  return {
-    check,
-  };
+  return useMemo(
+    () => ({
+      check,
+    }),
+    [check],
+  );
 };

@@ -190,6 +190,39 @@ export const usePhoneInput = ({
     });
   };
 
+  const getFullCountry = useCallback(
+    (iso2: string) => {
+      return getCountry({
+        value: iso2,
+        field: 'iso2',
+        countries,
+      }) as ParsedCountry;
+    },
+    [countries],
+  );
+
+  const onHistoryChange = useCallback(
+    ({
+      inputValue,
+      phone,
+      country,
+    }: {
+      inputValue: string;
+      phone: string;
+      country: CountryIso2;
+    }) => {
+      if (!onChange) return;
+
+      const fullCountry = getFullCountry(country);
+      onChange({
+        phone,
+        inputValue,
+        country: fullCountry,
+      });
+    },
+    [getFullCountry, onChange],
+  );
+
   /**
    * phone - E.164 formatted phone
    * inputValue - value that should be rendered in the input element
@@ -240,29 +273,9 @@ export const usePhoneInput = ({
       },
       {
         overrideLastItemDebounceMS: historySaveDebounceMS,
-        onChange: ({ inputValue, phone, country }) => {
-          if (!onChange) return;
-
-          const fullCountry = getFullCountry(country);
-          onChange({
-            phone,
-            inputValue,
-            country: fullCountry,
-          });
-        },
+        onChange: onHistoryChange,
       },
     );
-
-  const getFullCountry = useCallback(
-    (iso2: string) => {
-      return getCountry({
-        value: iso2,
-        field: 'iso2',
-        countries,
-      }) as ParsedCountry;
-    },
-    [countries],
-  );
 
   const fullCountry = useMemo(() => {
     return getFullCountry(country);
@@ -330,39 +343,46 @@ export const usePhoneInput = ({
     return value;
   };
 
-  const setCountry = (
-    countryIso2: CountryIso2,
-    options = { focusOnInput: false },
-  ) => {
-    const newCountry = getCountry({
-      value: countryIso2,
-      field: 'iso2',
-      countries,
-    });
-    if (!newCountry) {
-      console.error(
-        `[react-international-phone]: can not find a country with "${countryIso2}" iso2 code`,
-      );
-      return;
-    }
-
-    const inputValue = disableDialCodeAndPrefix
-      ? ''
-      : `${prefix}${newCountry.dialCode}${charAfterDialCode}`;
-
-    updateHistory({
-      inputValue,
-      phone: `${prefix}${newCountry.dialCode}`,
-      country: newCountry.iso2,
-    });
-
-    if (options.focusOnInput) {
-      // Next tick is used to support UI libraries (had an issue with MUI)
-      Promise.resolve().then(() => {
-        inputRef.current?.focus();
+  const setCountry = useCallback(
+    (countryIso2: CountryIso2, options = { focusOnInput: false }) => {
+      const newCountry = getCountry({
+        value: countryIso2,
+        field: 'iso2',
+        countries,
       });
-    }
-  };
+      if (!newCountry) {
+        console.error(
+          `[react-international-phone]: can not find a country with "${countryIso2}" iso2 code`,
+        );
+        return;
+      }
+
+      const inputValue = disableDialCodeAndPrefix
+        ? ''
+        : `${prefix}${newCountry.dialCode}${charAfterDialCode}`;
+
+      updateHistory({
+        inputValue,
+        phone: `${prefix}${newCountry.dialCode}`,
+        country: newCountry.iso2,
+      });
+
+      if (options.focusOnInput) {
+        // Next tick is used to support UI libraries (had an issue with MUI)
+        Promise.resolve().then(() => {
+          inputRef.current?.focus();
+        });
+      }
+    },
+    [
+      countries,
+      disableDialCodeAndPrefix,
+      prefix,
+      charAfterDialCode,
+      updateHistory,
+      inputRef,
+    ],
+  );
 
   const [initialized, setInitialized] = useState(false);
 
