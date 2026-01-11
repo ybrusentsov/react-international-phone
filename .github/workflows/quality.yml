@@ -81,7 +81,22 @@ jobs:
       - name: Build Storybook
         run: pnpm storybook:build
 
-      - name: Run Storybook Test Runner
-        run: pnpm test-storybook
+      - name: Start Storybook server and run tests
+        run: |
+          npx http-server ./storybook-static -p 6006 --silent &
+          SERVER_PID=$!
+          # Wait for server to be ready
+          for i in {1..30}; do
+            if curl -f http://localhost:6006 > /dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+          # Run tests
+          pnpm test-storybook
+          TEST_EXIT=$?
+          # Cleanup
+          kill $SERVER_PID 2>/dev/null || true
+          exit $TEST_EXIT
         env:
           CI: true
