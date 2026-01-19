@@ -1,3 +1,24 @@
+# [4.7.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.6.1...v4.7.0) (2026-01-19)
+
+
+### Bug Fixes
+
+* **ci:** add OIDC token support in release pipeline ([ee27255](https://github.com/ybrusentsov/react-international-phone/commit/ee27255895b181976388584afa7e5794e3dfb97a))
+* **ci:** add storybook testing to ci ([da1866e](https://github.com/ybrusentsov/react-international-phone/commit/da1866e34928e637109524930dfef0da9d74d28e))
+* **ci:** run storybook server on storybook-test quality pipeline ([1f75150](https://github.com/ybrusentsov/react-international-phone/commit/1f751505fa20e77517f593fbbf63200927bc8838))
+* **country-data:** add trailing comma to Kuwait entry ([7ef67f1](https://github.com/ybrusentsov/react-international-phone/commit/7ef67f105d82aa7948b99a699dcf5109410cd283))
+
+
+### Features
+
+* **country-data:** Add Gibraltar to country data ([ca84721](https://github.com/ybrusentsov/react-international-phone/commit/ca84721e247eb621f4a94c9f22c50c48e186d06b))
+* Improve phone number formats for GCC region ([122a5a7](https://github.com/ybrusentsov/react-international-phone/commit/122a5a74fd072706d53f6eb5ec9f4598a9b146e4))
+
+
+### Performance Improvements
+
+* optimize rerenders in usePhoneInput, wrap CountrySelector with React.memo ([f015ad0](https://github.com/ybrusentsov/react-international-phone/commit/f015ad05753a675bd3688a7faccc1178547d5027))
+
 ## [4.6.1](https://github.com/ybrusentsov/react-international-phone/compare/v4.6.0...v4.6.1) (2025-11-27)
 
 
