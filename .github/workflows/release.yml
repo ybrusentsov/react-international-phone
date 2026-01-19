@@ -61,8 +61,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Publish npm package
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@v5
         with:
-          semantic_version: 25.0.1
+          semantic_version: 25
         env:
           GITHUB_TOKEN: ${{ secrets.CI_SEMANTIC_RELEASE_GITHUB_TOKEN }}
