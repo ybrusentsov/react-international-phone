@@ -64,3 +64,39 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: webiny/action-conventional-commits@v1.1.0
+
+  storybook-functional-tests:
+    name: Storybook Functional Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Install
+        uses: ./.github/composite-actions/install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build Storybook
+        run: pnpm storybook:build
+
+      - name: Start Storybook server and run tests
+        run: |
+          npx http-server ./storybook-static -p 6006 --silent &
+          SERVER_PID=$!
+          # Wait for server to be ready
+          for i in {1..30}; do
+            if curl -f http://localhost:6006 > /dev/null 2>&1; then
+              break
+            fi
+            sleep 1
+          done
+          # Run tests
+          pnpm test-storybook
+          TEST_EXIT=$?
+          # Cleanup
+          kill $SERVER_PID 2>/dev/null || true
+          exit $TEST_EXIT
+        env:
+          CI: true
