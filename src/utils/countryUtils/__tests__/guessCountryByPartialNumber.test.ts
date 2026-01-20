@@ -144,10 +144,16 @@ describe('guessCountryByPartialNumber', () => {
     ).toMatchObject({ country: { dialCode: '1', iso2: 'ca' } });
     expect(
       guessCountryByPartialNumber({
-        phone: '+7310',
+        phone: '+7721',
         countries: defaultCountries,
       }),
     ).toMatchObject({ country: { dialCode: '7', iso2: 'kz' } });
+    expect(
+      guessCountryByPartialNumber({
+        phone: '+7921',
+        countries: defaultCountries,
+      }),
+    ).toMatchObject({ country: { dialCode: '7', iso2: 'ru' } });
   });
 
   test('should return the current country if the dial code matches', () => {
