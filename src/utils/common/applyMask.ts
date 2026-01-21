@@ -22,6 +22,16 @@ interface ApplyMaskArgs {
    * if false -> "(1234) "
    */
   trimNonMaskCharsLeftover?: boolean;
+
+  /**
+   * @description Ignores masking for numbers longer than the mask
+   * @example
+   * value: "123456789"
+   * mask: "(....) ...."
+   * if true -> "123456789"
+   * if false -> "(1234) 5678"
+   */
+  enableLongNumbers?: boolean;
 }
 
 export const applyMask = ({
@@ -30,8 +40,11 @@ export const applyMask = ({
   maskSymbol,
   offset = 0,
   trimNonMaskCharsLeftover = false,
+  enableLongNumbers = false,
 }: ApplyMaskArgs): string => {
   if (value.length < offset) return value;
+  if (enableLongNumbers && value.length > mask.split('.').length - 1)
+    return value;
 
   const savedValuePart = value.slice(0, offset);
   const valueToMask = value.slice(offset);
