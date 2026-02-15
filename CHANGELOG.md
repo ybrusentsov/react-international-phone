@@ -1,3 +1,10 @@
+## [4.7.1](https://github.com/ybrusentsov/react-international-phone/compare/v4.7.0...v4.7.1) (2026-02-15)
+
+
+### Bug Fixes
+
+* **ci:** add contents write permission for github releases ([0526989](https://github.com/ybrusentsov/react-international-phone/commit/05269893484e70c86f468626f6f01ca9b7f6519f))
+
 # [4.7.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.6.1...v4.7.0) (2026-01-19)
 
 
