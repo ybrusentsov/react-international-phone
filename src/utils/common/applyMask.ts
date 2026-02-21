@@ -22,6 +22,16 @@ interface ApplyMaskArgs {
    * if false -> "(1234) "
    */
   trimNonMaskCharsLeftover?: boolean;
+
+  /**
+   * @description Allow input to exceed the mask length. When set to true, formatting mask will apply to the part that fits, and overflow digits will be appended at the end.
+   * @example
+   * value: "12345678"
+   * mask: "(....)"
+   * if true -> "(1234)5678" (formatted part + overflow)
+   * if false -> "(1234" (formatted but truncated)
+   */
+  allowMaskOverflow?: boolean;
 }
 
 export const applyMask = ({
@@ -30,14 +40,21 @@ export const applyMask = ({
   maskSymbol,
   offset = 0,
   trimNonMaskCharsLeftover = false,
+  allowMaskOverflow = false,
 }: ApplyMaskArgs): string => {
   if (value.length < offset) return value;
 
-  const savedValuePart = value.slice(0, offset);
-  const valueToMask = value.slice(offset);
+  const prefix = value.slice(0, offset);
+  const valueToFormat = value.slice(offset);
 
-  let result = savedValuePart;
+  const maskLength = mask
+    .split('')
+    .filter((char) => char === maskSymbol).length;
 
+  const valueToMask = valueToFormat.slice(0, maskLength);
+  const overflow = allowMaskOverflow ? valueToFormat.slice(maskLength) : '';
+
+  let result = prefix;
   let charsPlaced = 0;
 
   for (const maskChar of mask.split('')) {
@@ -56,5 +73,5 @@ export const applyMask = ({
     }
   }
 
-  return result;
+  return result + overflow;
 };

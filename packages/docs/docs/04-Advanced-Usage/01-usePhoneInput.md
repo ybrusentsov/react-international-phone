@@ -134,6 +134,14 @@ description="Disable phone value mask formatting. All formatting characters will
 defaultValue="false"
 />
 
+### `allowMaskOverflow`
+
+<PropDescription
+type="boolean"
+description={<span>Allow input to exceed the mask length. When set to <code>true</code>, formatting mask will apply to the part that fits within the mask capacity, and overflow digits will be appended at the end unformatted.<br/>For example: <code>"+123456789012"</code>, will be formatted like <code>"+1 (234) 567-89012"</code></span>}
+defaultValue="false"
+/>
+
 ### `inputRef`
 
 <PropDescription
