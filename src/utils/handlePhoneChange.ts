@@ -15,6 +15,7 @@ export interface PhoneFormattingConfig {
   defaultMask: string;
   countryGuessingEnabled: boolean;
   disableFormatting: boolean;
+  allowMaskOverflow: boolean;
 }
 
 interface HandlePhoneChangeProps extends PhoneFormattingConfig {
@@ -38,6 +39,7 @@ export function handlePhoneChange({
   defaultMask,
   countryGuessingEnabled,
   disableFormatting,
+  allowMaskOverflow,
 }: HandlePhoneChangeProps): {
   phone: string;
   inputValue: string;
@@ -77,6 +79,7 @@ export function handlePhoneChange({
     forceDialCode,
     insertDialCodeOnEmpty,
     disableDialCodeAndPrefix,
+    allowMaskOverflow,
   });
 
   const resultCountry =

@@ -32,6 +32,13 @@ export interface FormatPhoneConfig {
    * Trim all non-digit values from the end of the result
    */
   trimNonDigitsEnd?: boolean;
+  /**
+   * Allow input to exceed the mask length. When set to true, formatting mask will apply to the part that fits, and overflow digits will be appended at the end.
+   * @example
+   * phone: "+1 23456789012", mask: "(...) ...-...."
+   * result: "+1 (234) 567-89012"
+   */
+  allowMaskOverflow?: boolean;
 }
 
 export const formatPhone = (
@@ -137,6 +144,7 @@ export const formatPhone = (
     trimNonMaskCharsLeftover:
       config.trimNonDigitsEnd ||
       (config.disableDialCodeAndPrefix && phoneRightSide.length === 0),
+    allowMaskOverflow: config.allowMaskOverflow,
   });
 
   if (config.disableDialCodeAndPrefix) {
