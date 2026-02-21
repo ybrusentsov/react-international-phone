@@ -33,6 +33,7 @@ export const handleUserInput = (
     defaultMask,
     disableFormatting,
     countries,
+    allowMaskOverflow,
   }: HandleUserInputOptions,
 ): {
   phone: string;
@@ -131,6 +132,7 @@ export const handleUserInput = (
     disableDialCodeAndPrefix,
     disableFormatting,
     defaultMask,
+    allowMaskOverflow,
   });
 
   const newCursorPosition = getCursorPosition({

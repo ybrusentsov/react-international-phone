@@ -114,4 +114,74 @@ describe('applyMask', () => {
       '(1234',
     );
   });
+
+  test('should handle allowMaskOverflow option', () => {
+    // format the part that fits, append overflow at the end
+    expect(
+      applyMask({
+        value: '1234567890123',
+        mask: '.. .. ....',
+        maskSymbol: '.',
+        allowMaskOverflow: true,
+      }),
+    ).toBe('12 34 567890123');
+
+    expect(
+      applyMask({
+        value: '123456789',
+        mask: '.... ....',
+        maskSymbol: '.',
+        allowMaskOverflow: true,
+      }),
+    ).toBe('1234 56789');
+
+    expect(
+      applyMask({
+        value: '23456789012',
+        mask: '(...) ...-....',
+        maskSymbol: '.',
+        allowMaskOverflow: true,
+      }),
+    ).toBe('(234) 567-89012');
+
+    // with offset
+    expect(
+      applyMask({
+        value: '+1234567890123',
+        mask: '.. .. ....',
+        maskSymbol: '.',
+        offset: 2,
+        allowMaskOverflow: true,
+      }),
+    ).toBe('+123 45 67890123');
+
+    // apply formatting on mask not overflow (normal behavior)
+    expect(
+      applyMask({
+        value: '1234567',
+        mask: '.. .. ....',
+        maskSymbol: '.',
+        allowMaskOverflow: true,
+      }),
+    ).toBe('12 34 567');
+
+    expect(
+      applyMask({
+        value: '1234',
+        mask: '.... ....',
+        maskSymbol: '.',
+        allowMaskOverflow: true,
+      }),
+    ).toBe('1234 ');
+
+    expect(
+      applyMask({
+        value: '+1234567',
+        mask: '.. .. ....',
+        maskSymbol: '.',
+        offset: 2,
+        allowMaskOverflow: true,
+      }),
+    ).toBe('+123 45 67');
+  });
 });
