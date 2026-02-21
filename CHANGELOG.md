@@ -1,3 +1,10 @@
+# [4.8.0](https://github.com/ybrusentsov/react-international-phone/compare/v4.7.1...v4.8.0) (2026-02-21)
+
+
+### Features
+
+* add allowMaskOverflow prop to allow exceed mask length ([a6f012d](https://github.com/ybrusentsov/react-international-phone/commit/a6f012d42f9b6c87664cf40e669d3d2ab1c347b5))
+
 ## [4.7.1](https://github.com/ybrusentsov/react-international-phone/compare/v4.7.0...v4.7.1) (2026-02-15)
 
 
