@@ -81,6 +81,35 @@ describe('getActiveFormattingMask', () => {
       }),
     ).toBe('.... ... ...');
 
+    // Argentina: 10 national digits, 11 for mobiles (9 + area code + number)
+    expect(
+      getActiveFormattingMask({
+        phone: '+541123456789',
+        country: getCountryByIso2('ar'),
+      }),
+    ).toBe('(..) .... ....');
+
+    expect(
+      getActiveFormattingMask({
+        phone: '+542211234567',
+        country: getCountryByIso2('ar'),
+      }),
+    ).toBe('(...) ... ....');
+
+    expect(
+      getActiveFormattingMask({
+        phone: '+5491123456789',
+        country: getCountryByIso2('ar'),
+      }),
+    ).toBe('. (..) .... ....');
+
+    expect(
+      getActiveFormattingMask({
+        phone: '+5492211234567',
+        country: getCountryByIso2('ar'),
+      }),
+    ).toBe('. (...) ... ....');
+
     // should return default mask if provided phone is empty
     expect(
       getActiveFormattingMask({
