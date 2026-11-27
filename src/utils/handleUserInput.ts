@@ -58,8 +58,8 @@ export const handleUserInput = (
   // Last char that user typed on a keyboard
   const lastTypedChar = nativeEventData || undefined;
 
-  const userInput = e.target.value;
-  const cursorPositionAfterInput = e.target.selectionStart ?? 0;
+  let userInput = e.target.value;
+  let cursorPositionAfterInput = e.target.selectionStart ?? 0;
 
   // ignore history events (history should be handled manually)
   // only possible way to trigger native history event is to press ctrl+z on empty input
@@ -90,6 +90,22 @@ export const handleUserInput = (
       cursorPosition: cursorPositionAfterInput - (lastTypedChar?.length ?? 0),
       country,
     };
+  }
+
+  const prefixedDialCode = `${prefix}${country.dialCode}`;
+  if (
+    forceDialCode &&
+    isTyped &&
+    lastTypedChar &&
+    !userInput.startsWith(prefixedDialCode) &&
+    phoneBeforeInput.startsWith(prefixedDialCode) &&
+    cursorPositionAfterInput - lastTypedChar.length < prefixedDialCode.length
+  ) {
+    const dialCodeEnd = prefixedDialCode.length + charAfterDialCode.length;
+    userInput = `${prefixedDialCode}${charAfterDialCode}${lastTypedChar}${phoneBeforeInput.slice(
+      dialCodeEnd,
+    )}`;
+    cursorPositionAfterInput = dialCodeEnd + lastTypedChar.length;
   }
 
   // forceDialCode: ignore dial code change (only if prefixed phone was not inserted)

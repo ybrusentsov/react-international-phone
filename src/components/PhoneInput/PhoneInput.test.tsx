@@ -516,6 +516,25 @@ describe('PhoneInput', () => {
       expect(onChange.mock.calls.length).toBe(1); // not changed
     });
 
+    test('should move a digit typed before the dial code after it', async () => {
+      const onChange = jest.fn();
+      const user = userEvent.setup();
+      render(
+        <PhoneInput defaultCountry="us" forceDialCode onChange={onChange} />,
+      );
+      expect(getInput().value).toBe('+1 ');
+
+      setCursorPosition(0);
+      getInput().focus();
+      await user.keyboard('2');
+      expect(getInput().value).toBe('+1 (2');
+      expect(getInput().selectionStart).toBe(5);
+
+      await user.keyboard('34');
+      expect(getInput().value).toBe('+1 (234) ');
+      expect(onChange.mock.calls.at(-1)[0]).toBe('+1234');
+    });
+
     test('should allow change dial code with country selector', () => {
       render(
         <PhoneInput value="12345678900" defaultCountry="us" forceDialCode />,
